@@ -1,18 +1,39 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\PageController;
+use App\Http\Controllers\DonorProfileController;
+use App\Http\Controllers\DonorScheduleController;
+use App\Http\Controllers\DonorBookingController;
 
 /*
 |--------------------------------------------------------------------------
 | Web Routes
 |--------------------------------------------------------------------------
 |
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "web" middleware group. Make something great!
+| Di sinilah rute web didaftarkan untuk aplikasi Anda.
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Rute untuk halaman Beranda
+Route::get('/', [PageController::class, 'index'])->name('beranda');
+
+// Rute mockup Dasbor Pendonor
+Route::get('/pendonor/dashboard', [PageController::class, 'dashboardPendonor'])->name('pendonor.dashboard');
+
+// Rute Profil Pendonor
+Route::get('/pendonor/profil', [DonorProfileController::class, 'show'])->name('pendonor.profil');
+
+// Rute Jadwal Pelayanan Pendonor
+Route::get('/pendonor/jadwal', [DonorScheduleController::class, 'index'])->name('pendonor.schedule');
+
+// Rute Pemesanan Donor (Baru)
+Route::get('/pendonor/pemesanan', [DonorBookingController::class, 'index'])->name('pendonor.booking');
+Route::post('/pendonor/pemesanan/store', [DonorBookingController::class, 'store'])->name('pendonor.booking.store');
+Route::post('/pendonor/pemesanan/cancel', [DonorBookingController::class, 'cancel'])->name('pendonor.booking.cancel');
+
+// Rute mockup Dasbor Petugas UDD
+Route::get('/petugas/dashboard', [PageController::class, 'dashboardPetugas'])->name('petugas.dashboard');
+
+// Rute mockup Dasbor Admin
+Route::get('/admin/dashboard', [PageController::class, 'admin.dashboard'])->name('admin.dashboard');
