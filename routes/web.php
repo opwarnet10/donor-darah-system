@@ -5,6 +5,7 @@ use App\Http\Controllers\PageController;
 use App\Http\Controllers\DonorProfileController;
 use App\Http\Controllers\DonorScheduleController;
 use App\Http\Controllers\DonorBookingController;
+use App\Http\Controllers\DonorQuestionnaireController;
 
 /*
 |--------------------------------------------------------------------------
@@ -31,6 +32,10 @@ Route::get('/pendonor/jadwal', [DonorScheduleController::class, 'index'])->name(
 Route::get('/pendonor/pemesanan', [DonorBookingController::class, 'index'])->name('pendonor.booking');
 Route::post('/pendonor/pemesanan/store', [DonorBookingController::class, 'store'])->name('pendonor.booking.store');
 Route::post('/pendonor/pemesanan/cancel', [DonorBookingController::class, 'cancel'])->name('pendonor.booking.cancel');
+
+// Rute Kuesioner Pradonasi Pendonor (Baru - Step 1)
+Route::get('/pendonor/kuesioner/{id}', [DonorQuestionnaireController::class, 'show'])->name('pendonor.questionnaire');
+Route::post('/pendonor/kuesioner/{id}/submit', [DonorQuestionnaireController::class, 'submit'])->name('pendonor.questionnaire.submit');
 
 // Rute mockup Dasbor Petugas UDD
 Route::get('/petugas/dashboard', [PageController::class, 'dashboardPetugas'])->name('petugas.dashboard');

@@ -30,7 +30,7 @@
             <div class="card-body">
                 <h5 class="card-title fw-bold text-dark mb-3">Konfirmasi Pemesanan</h5>
                 
-                @if($jadwalTerpilih)
+                @if(isset($jadwalTerpilih) && $jadwalTerpilih)
                     <div class="alert alert-light border">
                         <h6 class="fw-bold text-danger mb-1">{{ $jadwalTerpilih['nama_kegiatan'] }}</h6>
                         <p class="small text-muted mb-2"><i class="bi bi-geo-alt"></i> {{ $jadwalTerpilih['lokasi'] }}</p>
@@ -61,7 +61,7 @@
             <div class="card-body">
                 <h5 class="card-title fw-bold text-dark mb-3">Riwayat Pemesanan Anda</h5>
                 
-                @if(count($riwayatPemesanan) > 0)
+                @if(isset($riwayatPemesanan) && count($riwayatPemesanan) > 0)
                     <div class="table-responsive">
                         <table class="table table-hover align-middle small">
                             <thead class="table-light">
@@ -91,6 +91,12 @@
                                     </td>
                                     <td class="text-end">
                                         @if($pesanan['status'] == 'MENUNGGU')
+                                            @if(isset($pesanan['sudah_isi_kuesioner']) && $pesanan['sudah_isi_kuesioner'])
+                                                <span class="badge bg-success mb-1 d-block" style="font-size: 0.75rem;">Kuesioner Selesai</span>
+                                            @else
+                                                <a href="{{ route('pendonor.questionnaire', ['id' => $pesanan['id']]) }}" class="btn btn-outline-primary btn-sm py-0 px-2 mb-1" style="font-size: 0.75rem;">Isi Kuesioner</a>
+                                            @endif
+                                            
                                             <form action="{{ route('pendonor.booking.cancel') }}" method="POST" class="d-inline">
                                                 @csrf
                                                 <input type="hidden" name="id_pemesanan" value="{{ $pesanan['id'] }}">
